@@ -1,13 +1,9 @@
-﻿#include <iostream>
-#include <omp.h>
-#include <climits>
-#include <cstdlib>
-#include <ctime>
-#include <thread>
-#include <chrono>
+﻿#include<iostream>
+#include"omp.h"
 
-const int rows = 10000;
-const int cols = 10000;
+
+const int rows = 100000;
+const int cols = 1000;
 
 int arr[rows][cols];
 
@@ -24,7 +20,7 @@ long long get_sum(int num_threads, double& execution_time) {
     long long sum = 0;
     double t1 = omp_get_wtime();
 
-#pragma omp parallel num_threads(num_threads) reduction(+:sum)
+#pragma omp parallel num_threads(num_threads) reduction(+:sum) 
     {
 #pragma omp for
         for (int i = 0; i < rows; i++) {
@@ -70,7 +66,6 @@ int main() {
     int min_row[max_thread];
     double executed_time[2][max_thread];
     init_arr();
-
 
     omp_set_nested(1);
     double t1 = omp_get_wtime();
